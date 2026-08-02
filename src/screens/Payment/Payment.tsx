@@ -4,7 +4,7 @@ import React from 'react'
 const Payment = () => {
   return (
     <View>
-      <Text>Payment</Text>
+      <Text>Payment lets thrice</Text>
     </View>
   )
 }
