@@ -21,11 +21,10 @@ const SplashScreen = () => {
   };
 
   useEffect(() => {
-    const timer = setTimeout(() => {
+  
       checkUserExist();
-    }, 2000);
+  
 
-    return () => clearTimeout(timer);
   }, []);
 
   return (
