@@ -10,7 +10,7 @@ type SplashScreenNavigationProp =
 const SplashScreen = () => {
   const navigation = useNavigation<SplashScreenNavigationProp>();
 
-  const userExist = true;
+  const userExist = false;
 
   const checkUserExist = () => {
     if (userExist) {
