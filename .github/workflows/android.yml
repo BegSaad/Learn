@@ -2,10 +2,10 @@ name: React Native Android CI
 
 on:
   push:
-    branches: [main]
+    branches: -"**"
 
   pull_request:
-    branches: [main]
+    branches: -"**"
 
 jobs: 
   build:
