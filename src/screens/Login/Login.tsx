@@ -3,12 +3,14 @@ import {
   Text,
   TouchableOpacity,
   KeyboardAvoidingView,
-  Platform,
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { TextInput } from 'react-native-paper';
 import { Ionicons } from '@react-native-vector-icons/ionicons';
 import styles from './styles';
+
+const MailIcon = (props: any) => <Ionicons name="mail-outline" size={22} {...props} />;
+const LockIcon = (props: any) => <Ionicons name="lock-closed-outline" size={22} {...props} />;
 
 const Login = () => {
   const [email, setEmail] = useState('');
@@ -16,10 +18,7 @@ const Login = () => {
 
   return (
     <SafeAreaView style={styles.container}>
-      <KeyboardAvoidingView
-        // style={{ flex: 1 }}
-        // behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-      >
+      <KeyboardAvoidingView>
         <Text style={styles.headerText}>Go and Learn</Text>
 
         <TextInput
@@ -32,7 +31,7 @@ const Login = () => {
           autoCorrect={false}
           left={
             <TextInput.Icon
-              icon={() => <Ionicons name="mail-outline" size={22} />}
+              icon={MailIcon}
             />
           }
           style={styles.input}
@@ -47,7 +46,7 @@ const Login = () => {
           autoCapitalize="none"
           left={
             <TextInput.Icon
-              icon={() => <Ionicons name="lock-closed-outline" size={22} />}
+              icon={LockIcon}
             />
           }
           style={styles.input}

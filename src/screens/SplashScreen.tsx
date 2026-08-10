@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { View, Text, ActivityIndicator } from 'react-native';
+import { View, Text, ActivityIndicator, StyleSheet } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { RootParamList } from '../utils/RootParamList';
@@ -12,33 +12,32 @@ const SplashScreen = () => {
 
   const userExist = false;
 
-  const checkUserExist = () => {
+  const checkUserExist = React.useCallback(() => {
     if (userExist) {
       navigation.replace('AppStack');
     } else {
       navigation.replace('AuthStack');
     }
-  };
+  }, [navigation, userExist]);
 
   useEffect(() => {
-  
-      checkUserExist();
-  
-
-  }, []);
+    checkUserExist();
+  }, [checkUserExist]);
 
   return (
-    <View
-      style={{
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
-      }}
-    >
+    <View style={styles.container}>
       <ActivityIndicator size="large" color="#0000ff" />
       <Text>Loading...</Text>
     </View>
   );
 };
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+});
 
 export default SplashScreen;
