@@ -1,63 +1,48 @@
+import { StyleSheet, Text, View ,TouchableOpacity} from 'react-native';
 import React, { useState } from 'react';
-import {
-  Text,
-  TouchableOpacity,
-  KeyboardAvoidingView,
-} from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
-import { TextInput } from 'react-native-paper';
-import { Ionicons } from '@react-native-vector-icons/ionicons';
-import styles from './styles';
-
-const MailIcon = (props: any) => <Ionicons name="mail-outline" size={22} {...props} />;
-const LockIcon = (props: any) => <Ionicons name="lock-closed-outline" size={22} {...props} />;
+import InputFields from '../../components/Forms/InputFields';
 
 const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
   return (
-    <SafeAreaView style={styles.container}>
-      <KeyboardAvoidingView>
-        <Text style={styles.headerText}>Go and Learn</Text>
+    <View style={styles.container}>
 
-        <TextInput
-          label="Email"
-          mode="outlined"
-          value={email}
-          onChangeText={setEmail}
-          keyboardType="email-address"
-          autoCapitalize="none"
-          autoCorrect={false}
-          left={
-            <TextInput.Icon
-              icon={MailIcon}
-            />
-          }
-          style={styles.input}
-        />
+      <InputFields
+        icon="mail"
+        placeholder="Enter email"
+        value={email}
+        onChangeText={setEmail}
+      />
 
-        <TextInput
-          label="Password"
-          mode="outlined"
-          value={password}
-          onChangeText={setPassword}
-          secureTextEntry
-          autoCapitalize="none"
-          left={
-            <TextInput.Icon
-              icon={LockIcon}
-            />
-          }
-          style={styles.input}
-        />
+      <InputFields
+        icon="lock-closed"
+        placeholder="Enter password"
+        value={password}
+        onChangeText={setPassword}
+        secureTextEntry
+      />
+<TouchableOpacity 
+onPress={()=>{
+  
+}}
+>
+  <Text>Forgot Password</Text>
+</TouchableOpacity>
+     
 
-        <TouchableOpacity style={styles.button}>
-          <Text style={styles.buttonText}>Login</Text>
-        </TouchableOpacity>
-      </KeyboardAvoidingView>
-    </SafeAreaView>
+    </View>
   );
 };
 
 export default Login;
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    padding: 20,
+    justifyContent:'center'
+  },
+  
+});

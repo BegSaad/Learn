@@ -1,18 +1,4 @@
-// import { StyleSheet, Text, View } from 'react-native'
-// const styles = StyleSheet.create({
-//     container:{
-//         backgroundColor:'#f5d0f3',
-//         flex:1,
-      
-//         alignItems:'center'
-//     },
-//     headerText:{
-//         fontSize:50,
-//         fontWeight:'500',
-     
-//     },
-    
-// })
+
 
 
 // export default styles
