@@ -1,14 +1,23 @@
-import { StyleSheet, Text, View ,TouchableOpacity} from 'react-native';
+import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
 import React, { useState } from 'react';
 import InputFields from '../../components/Forms/InputFields';
+import { useNavigation } from '@react-navigation/native';
+import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import { RootParamList } from '../../utils/RootParamList';
+import PrimaryButton from '../../components/Button/PrimaryButton';
+import GoogleButton from '../../components/Button/GoogleButton';
+import Toast from 'react-native-toast-message';
+type NavigationProp = NativeStackNavigationProp<RootParamList>;
 
 const Login = () => {
+  const navigation = useNavigation<NavigationProp>();
+
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
   return (
     <View style={styles.container}>
-
+<Text style={{fontSize:30, fontWeight:'bold', marginBottom:20}}>Welcome Back</Text>
       <InputFields
         icon="mail"
         placeholder="Enter email"
@@ -23,14 +32,47 @@ const Login = () => {
         onChangeText={setPassword}
         secureTextEntry
       />
-<TouchableOpacity 
-onPress={()=>{
-  
-}}
->
-  <Text>Forgot Password</Text>
-</TouchableOpacity>
-     
+
+      <TouchableOpacity
+        onPress={() => navigation.navigate('ForgotPassword')}
+        style={{alignSelf: 'flex-end', marginBottom: 20}}
+      >
+        <Text>Forgot Password</Text>
+      </TouchableOpacity>
+
+      <PrimaryButton
+        title="Login"
+        onPress={() =>{ navigation.navigate('AppStack')
+          Toast.show({
+      type: 'success',
+
+      text1: 'Login Successful',
+
+      text2: 'Welcome back!',
+
+      position: 'top',
+
+      visibilityTime: 3000,
+});
+        }}
+      />
+
+     <View style={{ flexDirection:'row', alignItems:'center', justifyContent:'center', marginVertical:10 }}>
+      <View style={{backgroundColor:'#ccc', height:1, flex:1}}/>
+      <Text style={{textAlign:'center',marginVertical:10}}>or continue with Google</Text>
+      <View style={{backgroundColor:'#ccc', height:1, flex:1}}/>
+     </View>
+      <GoogleButton
+        title="Continue with Google"
+        icon="logo-google"
+        onPress={() => navigation.navigate('AppStack')}
+      />
+ <TouchableOpacity
+        onPress={() => navigation.navigate('SignUp')}
+        style={{alignSelf: 'flex-end', marginTop: 20}}
+      >
+        <Text>Dont have an account? Sign up</Text>
+      </TouchableOpacity>
 
     </View>
   );
@@ -42,7 +84,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 20,
-    justifyContent:'center'
+    justifyContent: 'center',
   },
-  
 });

@@ -8,6 +8,7 @@ type InputFieldProps = {
   value: string;
   onChangeText: (text: string) => void;
   secureTextEntry?: boolean;
+onBlur?: () => void;
 };
 
 const InputFields = ({
@@ -16,6 +17,7 @@ const InputFields = ({
   value,
   onChangeText,
   secureTextEntry,
+  onBlur
 }: InputFieldProps) => {
   const [hidePassword, setHidePassword] = useState<boolean>(true);
 
@@ -37,6 +39,7 @@ const InputFields = ({
         value={value}
         onChangeText={onChangeText}
         secureTextEntry={secureTextEntry ? hidePassword : false}
+        onBlur={onBlur}
       />
 
       {secureTextEntry && (
@@ -59,6 +62,11 @@ const styles = StyleSheet.create({
   container: {
     flexDirection: 'row',
     alignItems: 'center',
+    borderWidth: 1,
+    borderColor: '#ccc',
+    borderRadius: 8,
+    paddingHorizontal: 10,
+    marginVertical: 5,
   
   },
 
