@@ -8,8 +8,9 @@ import PrimaryButton from '../../components/Button/PrimaryButton';
 import GoogleButton from '../../components/Button/GoogleButton';
 import Toast from 'react-native-toast-message';
 type NavigationProp = NativeStackNavigationProp<RootParamList>;
-
+import useLoginApi from './useLoginApi';
 const Login = () => {
+  const {loginHandler,loading,reset}:any= useLoginApi();
   const navigation = useNavigation<NavigationProp>();
 
   const [email, setEmail] = useState('');
@@ -41,20 +42,48 @@ const Login = () => {
       </TouchableOpacity>
 
       <PrimaryButton
+     loading={loading}
+     disabled={loading}
         title="Login"
-        onPress={() =>{ navigation.navigate('AppStack')
-          Toast.show({
-      type: 'success',
+          onPress={() => {
+                if (!email.trim()) {
+      Toast.show({
+        type: 'error',
+        text1: 'Email Required',
+        text2: 'Please enter your email',
+      });
+      return;
+    }
+    if (!password.trim()) {
+      Toast.show({
+        type: 'error',
+        text1: 'Password Required',
+        text2: 'Please enter your password',
+      });
+      return;
 
-      text1: 'Login Successful',
-
-      text2: 'Welcome back!',
-
-      position: 'top',
-
-      visibilityTime: 3000,
-});
-        }}
+    }
+            loginHandler(email,password)
+          
+          
+          
+          if(reset){
+setEmail(''),
+setPassword('')
+          }
+          
+          
+          
+          
+          }
+          
+          
+          
+          
+          
+          }
+     
+      
       />
 
      <View style={{ flexDirection:'row', alignItems:'center', justifyContent:'center', marginVertical:10 }}>
@@ -65,7 +94,9 @@ const Login = () => {
       <GoogleButton
         title="Continue with Google"
         icon="logo-google"
-        onPress={() => navigation.navigate('AppStack')}
+        onPress={() => {
+console.log("login with google pressed")
+        }}
       />
  <TouchableOpacity
         onPress={() => navigation.navigate('SignUp')}

@@ -1,18 +1,15 @@
-import { KeyboardAvoidingView, Text, View } from 'react-native';
+import { KeyboardAvoidingView, Text, View ,ActivityIndicator} from 'react-native';
 import React from 'react';
 import InputFields from '../../components/Forms/InputFields';
 import { Formik } from 'formik';
 import { validationSchema } from '../../utils/validationSchema';
-import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
-import { RootParamList } from '../../utils/RootParamList';
-import { useNavigation } from '@react-navigation/native';
+
 import PrimaryButton from '../../components/Button/PrimaryButton';
-import Toast from 'react-native-toast-message';
-type NavigationProp = NativeStackNavigationProp<RootParamList>;
+
 import useSignUpApi from './useSignUpApi';
 const SignUp = () => {
-  const navigation = useNavigation<NavigationProp>();
-const {}= useSignUpApi()
+
+const {signUp,loading}= useSignUpApi()
   return (
   <KeyboardAvoidingView
   style={{flex:1, justifyContent:'center',padding:20
@@ -29,18 +26,17 @@ const {}= useSignUpApi()
           confirmPassword: '',
         }}
         validationSchema={validationSchema}
-        onSubmit={(values) => {
-          console.log(values);
-           
-   Toast.show({
-      type: 'success',
-      text1: 'Registered Successfully',
-      text2: 'Welcome to the app',
-      position: 'top',
-      visibilityTime: 3000,
-});
-          navigation.navigate('AppStack');
-        }}
+       onSubmit={async (values,{  resetForm}) => {
+    
+  console.log(values);
+  const success = await signUp(values)
+  if(success){
+    resetForm()
+  }
+
+  await signUp(values);
+
+}}
       >
         {({
           handleChange,
@@ -107,10 +103,12 @@ const {}= useSignUpApi()
             )}
 
            
-            <PrimaryButton
-            title='Sign Up'
-            onPress={() => handleSubmit()}></PrimaryButton>
-            
+           <PrimaryButton
+  title="Register"
+  onPress={handleSubmit}
+  loading={loading}
+  disabled={loading}
+/>
 
           </View>
         )}
