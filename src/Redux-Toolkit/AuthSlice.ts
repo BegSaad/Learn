@@ -1,24 +1,51 @@
-// import { createSlice } from '@reduxjs/toolkit';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-// const initialState = {
-//   user: null,
-//   isAuthenticated: false,
-// };
+interface AuthState {
+  accessToken: string | null;
+  refreshToken: string | null;
+  name: string | null;
+  email: string | null;
+  userId: string | null;    
+}
 
-// export const authSlice = createSlice({
-//   name: 'auth',
-//   initialState,
-//   reducers: {
-//     setUser: (state, action) => {
-//       state.user = action.payload;
-//       state.isAuthenticated = !!action.payload;
-//     },
-//     logout: (state) => {
-//       state.user = null;
-//       state.isAuthenticated = false;
-//     },
-//   },
-// });
+  const initialState: AuthState = {
+  accessToken: null,
+  refreshToken: null,
+  name:null,
+  email:null,
+    userId:null
+};
 
-// export const { setUser, logout } = authSlice.actions;
-// export default authSlice.reducer;
+const authSlice = createSlice({
+  name: 'auth',
+  initialState,
+  reducers: {
+    setToken: (
+      state,
+      action: PayloadAction<{
+        accessToken: string;
+        refreshToken: string;
+        name: string;
+        email: string;
+        userId: string; 
+      }>
+    ) => {
+      state.accessToken = action.payload.accessToken;
+      state.refreshToken = action.payload.refreshToken;
+      state.name = action.payload.name;
+      state.email = action.payload.email;
+        state.userId = action.payload.userId;
+    },
+
+    clearTokens: (state) => {
+      state.accessToken = null;
+      state.refreshToken = null;
+      state.name = null;
+      state.email = null;
+        state.userId = null;
+    },
+  },
+});
+
+export const { setToken, clearTokens } = authSlice.actions;
+export default authSlice.reducer;

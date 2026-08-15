@@ -4,12 +4,18 @@ import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { RootParamList } from '../../utils/RootParamList';
 import Toast from 'react-native-toast-message';
 import { useNavigation } from '@react-navigation/native';
+import { useDispatch } from 'react-redux';
+import { setToken } from '../../Redux-Toolkit/AuthSlice';
+import { createMMKV } from 'react-native-mmkv';
 
 type NavigationProp = NativeStackNavigationProp<RootParamList>;
 
+const storage = createMMKV();
+
 const useLoginApi = () => {
+  const dispatch = useDispatch();
   const [loading, setLoading] = useState(false);
-  const [reset,setReset]=useState(false)
+  const [reset, setReset] = useState(false);
   const navigation = useNavigation<NavigationProp>();
 
   const loginHandler = async (email: string, password: string) => {
@@ -33,10 +39,28 @@ const useLoginApi = () => {
           visibilityTime: 3000,
         });
 
-        console.log(response.data);
+        const { accessToken, refreshToken, user } = response.data;
+
+        // Save to MMKV
+        storage.set('accessToken', accessToken);
+        storage.set('refreshToken', refreshToken);
+        storage.set('userId', user.id);
+        storage.set('name', user.username);
+        storage.set('email', user.email);
+
+        // Save to Redux
+        dispatch(
+          setToken({
+            accessToken,
+            refreshToken,
+            userId: user.id,
+            name: user.username,
+            email: user.email,
+          })
+        );
 
         navigation.navigate('AppStack');
-        setReset(true)
+        setReset(true);
       }
     } catch (e: any) {
       Toast.show({
@@ -56,7 +80,7 @@ const useLoginApi = () => {
   return {
     loginHandler,
     loading,
-    reset
+    reset,
   };
 };
 
