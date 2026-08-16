@@ -9,5 +9,6 @@ export type RootParamList = {
   AppStack:undefined;
   AuthStack:undefined;
   SplashScreen:undefined;
-  HomeScreen:undefined
+  HomeScreen:undefined,
+  Account:undefined
 };
