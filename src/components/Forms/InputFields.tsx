@@ -5,10 +5,13 @@ import { Ionicons } from '@react-native-vector-icons/ionicons';
 type InputFieldProps = {
   icon?: React.ComponentProps<typeof Ionicons>['name'];
   placeholder: string;
-  value: string;
+  value: string | number;
   onChangeText: (text: string) => void;
   secureTextEntry?: boolean;
-onBlur?: () => void;
+  onBlur?: () => void;
+
+  // Add this
+  keyboardType?: React.ComponentProps<typeof TextInput>['keyboardType'];
 };
 
 const InputFields = ({
@@ -17,7 +20,8 @@ const InputFields = ({
   value,
   onChangeText,
   secureTextEntry,
-  onBlur
+  onBlur,
+  keyboardType,
 }: InputFieldProps) => {
   const [hidePassword, setHidePassword] = useState<boolean>(true);
 
@@ -36,10 +40,11 @@ const InputFields = ({
       <TextInput
         style={styles.input}
         placeholder={placeholder}
-        value={value}
+        value={String(value)}
         onChangeText={onChangeText}
         secureTextEntry={secureTextEntry ? hidePassword : false}
         onBlur={onBlur}
+        keyboardType={keyboardType}
       />
 
       {secureTextEntry && (
@@ -67,7 +72,6 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     paddingHorizontal: 10,
     marginVertical: 5,
-  
   },
 
   leftIcon: {
